@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduKisan - Scholarship Information Portal</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#333;
+}
+
+header{
+    background:linear-gradient(135deg,#2e7d32,#4caf50);
+    color:white;
+    text-align:center;
+    padding:40px 20px;
+}
+
+header h1{
+    font-size:2.2rem;
+}
+
+header p{
+    margin-top:10px;
+    opacity:0.9;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.search-box{
+    margin-bottom:30px;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h2{
+    color:#2e7d32;
+    margin-bottom:15px;
+    font-size:1.3rem;
+}
+
+.card p{
+    margin:8px 0;
+    line-height:1.5;
+}
+
+.card a{
+    display:inline-block;
+    margin-top:15px;
+    text-decoration:none;
+    background:#2e7d32;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+}
+
+.card a:hover{
+    opacity:0.9;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+    color:#666;
+}
+
+.no-result{
+    text-align:center;
+    font-size:18px;
+    color:#999;
+    display:none;
+}
+
+@media(max-width:600px){
+    header h1{
+        font-size:1.7rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🎓 EduKisan Scholarship Portal</h1>
+    <p>Helping Students Discover Scholarships & Educational Opportunities</p>
+</header>
+
+<div class="container">
+
+    <div class="search-box">
+        <input type="text" id="searchInput"
+               placeholder="Search scholarships by name, eligibility, or amount...">
+    </div>
+
+    <div class="cards" id="scholarshipCards">
+
+        <div class="card">
+            <h2>Central Sector Scholarship</h2>
+            <p><strong>Eligibility:</strong> Above 80% in Class 12</p>
+            <p><strong>Amount:</strong> ₹10,000/year</p>
+            <p><strong>Deadline:</strong> 31 July</p>
+            <a href="https://scholarships.gov.in/" target="_blank">Apply Now</a>
+        </div>
+
+        <div class="card">
+            <h2>Reliance Foundation Scholarship</h2>
+            <p><strong>Eligibility:</strong> Undergraduate Students</p>
+            <p><strong>Amount:</strong> Up to ₹2,00,000</p>
+            <p><strong>Deadline:</strong> 15 August</p>
+            <a href="https://www.scholarships.reliancefoundation.org/" target="_blank">Apply Now</a>
+        </div>
+
+        <div class="card">
+            <h2>AICTE Pragati Scholarship</h2>
+            <p><strong>Eligibility:</strong> Degree/Diploma Students</p>
+            <p><strong>Amount:</strong> ₹50,000/year</p>
+            <p><strong>Deadline:</strong> 30 September</p>
+            <a href="https://www.aicte-india.org/" target="_blank">Apply Now</a>
+        </div>
+
+        <div class="card">
+            <h2>PM Scholarship Scheme</h2>
+            <p><strong>Eligibility:</strong> Class 12 Pass Students</p>
+            <p><strong>Amount:</strong> ₹25,000/year</p>
+            <p><strong>Deadline:</strong> 31 August</p>
+            <a href="https://ksb.gov.in/" target="_blank">Apply Now</a>
+        </div>
+
+        <div class="card">
+            <h2>INSPIRE Scholarship</h2>
+            <p><strong>Eligibility:</strong> Top Science Students</p>
+            <p><strong>Amount:</strong> ₹80,000/year</p>
+            <p><strong>Deadline:</strong> 15 October</p>
+            <a href="https://online-inspire.gov.in/" target="_blank">Apply Now</a>
+        </div>
+
+        <div class="card">
+            <h2>National Means-cum-Merit Scholarship</h2>
+            <p><strong>Eligibility:</strong> School Students</p>
+            <p><strong>Amount:</strong> ₹12,000/year</p>
+            <p><strong>Deadline:</strong> Varies by State</p>
+            <a href="https://scholarships.gov.in/" target="_blank">Apply Now</a>
+        </div>
+
+    </div>
+
+    <p class="no-result" id="noResult">No scholarship found.</p>
+
+</div>
+
+<footer>
+    © 2026 EduKisan | Scholarship Information Portal
+</footer>
+
+<script>
+
+const searchInput = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".card");
+const noResult = document.getElementById("noResult");
+
+searchInput.addEventListener("keyup", function(){
+
+    let searchValue = this.value.toLowerCase();
+    let visibleCards = 0;
+
+    cards.forEach(card => {
+
+        let text = card.textContent.toLowerCase();
+
+        if(text.includes(searchValue)){
+            card.style.display = "block";
+            visibleCards++;
+        }
+        else{
+            card.style.display = "none";
+        }
+
+    });
+
+    noResult.style.display = visibleCards === 0 ? "block" : "none";
+
+});
+
+</script>
+
+</body>
+</html>
